@@ -1,0 +1,51 @@
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
+
+let tasks = [];
+let nextId = 1;
+
+app.get('/', (req, res) => {
+  res.send('API Lista de Tarefas');
+});
+
+app.post('/tasks', (req, res) => {
+  const { title } = req.body;
+  if (!title) return res.status(400).json({ error: 'O título é obrigatório' });
+
+  const newTask = { id: nextId++, title, done: false };
+  tasks.push(newTask);
+  res.status(201).json(newTask);
+});
+
+app.get('/tasks', (req, res) => {
+  res.json(tasks);
+});
+
+app.put('/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, done } = req.body;
+
+  const task = tasks.find(t => t.id == id);
+  if (!task) return res.status(404).json({ error: 'Tarefa não encontrada' });
+
+  task.title = title ?? task.title;
+  task.done = done ?? task.done;
+
+  res.json(task);
+});
+
+app.delete('/tasks/:id', (req, res) => {
+  const { id } = req.params;
+  const initialLength = tasks.length;
+  tasks = tasks.filter(t => t.id != id);
+  if (tasks.length === initialLength) return res.status(404).json({ error: 'Tarefa não encontrada' });
+
+  res.json({ message: 'Tarefa removida com sucesso' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
