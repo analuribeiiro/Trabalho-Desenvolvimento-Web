@@ -16,9 +16,11 @@ Body (JSON):
 {
   "title": "Estudar Node.js"
 }
+
 2. Listar tarefas
 
 GET http://localhost:3000/tasks
+
 
 3. Atualizar tarefa
 
@@ -29,6 +31,7 @@ Body (JSON):
   "title": "Estudar Node.js e Express",
   "done": true
 }
+
 4. Deletar tarefa
 
 DELETE http://localhost:3000/tasks/1
