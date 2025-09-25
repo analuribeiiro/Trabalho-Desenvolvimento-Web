@@ -8,7 +8,7 @@ Funcionalidades
 - Deletar uma tarefa pelo ID (DELETE)
 
 - ROTAS DA API
-- 1. Criar tarefa
+1. Criar tarefa
 
 POST http://localhost:3000/tasks
 
